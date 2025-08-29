@@ -66,6 +66,7 @@ const images = [
 
 
 
+
 const galleryContainer = document.querySelector(".gallery");
 
 const galleryMarkup = images
@@ -83,10 +84,23 @@ const galleryMarkup = images
       </li>
     `
   )
-  .join(""); 
-  
+  .join("");
+
 galleryContainer.innerHTML = galleryMarkup;
 
 galleryContainer.addEventListener("click", (event) => {
   event.preventDefault();
+
+    if (event.target.nodeName !== "IMG") return;
+
+    const largeImageURL = event.target.dataset.source;
+
+    const instance = basicLightbox.create(`
+    <div class="modal">
+      <img class="modal-image" src="${largeImageURL}" alt="${event.target.alt}" />
+    </div>
+  `);
+
+    instance.show();
 });
+
